@@ -1,180 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chem Done. Chill Now 🧪</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Chemistry Smash 🧪💥</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: system-ui, sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
 
-    body {
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #eef2f7, #dbe3ec);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+body {
+  background: linear-gradient(180deg, #0f1220, #1a1e33);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
 
-    .container {
-      background: white;
-      width: 90%;
-      max-width: 420px;
-      border-radius: 18px;
-      padding: 26px 22px 30px;
-      text-align: center;
-      box-shadow: 0 25px 45px rgba(0,0,0,0.1);
-      position: relative;
-    }
+.game {
+  width: 90%;
+  max-width: 420px;
+  background: #14172a;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  text-align: center;
+}
 
-    h1 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
+h1 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
 
-    p {
-      font-size: 14.5px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
+.sub {
+  font-size: 14px;
+  color: #cfcfcf;
+  margin-bottom: 14px;
+}
 
-    .lab {
-      position: relative;
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 18px;
-      border-radius: 50%;
-      background: #f2f6fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.lab {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  background: radial-gradient(circle, #22274a, #14172a);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
 
-    .molecule {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      background: #2f80ed;
-      border-radius: 50%;
-      animation: float 4s ease-in-out infinite;
-    }
+.atom {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ff4d4d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  animation: move 3s linear forwards;
+}
 
-    .molecule:nth-child(2) {
-      background: #27ae60;
-      animation-delay: 0.5s;
-    }
+@keyframes move {
+  from { transform: translateY(300px); }
+  to { transform: translateY(-60px); }
+}
 
-    .molecule:nth-child(3) {
-      background: #f2994a;
-      animation-delay: 1s;
-    }
+.score {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
 
-    .molecule:nth-child(4) {
-      background: #9b51e0;
-      animation-delay: 1.5s;
-    }
+.comment {
+  font-size: 13px;
+  color: #aaa;
+  min-height: 18px;
+}
 
-    @keyframes float {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(30px, -30px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    .formula {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 16px;
-    }
-
-    button {
-      background: #2f80ed;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      font-size: 14px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:active {
-      transform: scale(0.96);
-    }
-
-    .footer {
-      margin-top: 18px;
-      font-size: 13px;
-      color: #777;
-    }
-  </style>
+.footer {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #777;
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Chemistry exam = reaction complete 🧪</h1>
+<div class="game">
+  <h1>Break the Chemistry 🧪</h1>
+  <div class="sub">Tap atoms. Ruin chemistry. Relax brain.</div>
 
-    <p>
-      Aaj atoms zyada collide ho gaye honge dimaag mein.  
-      Ab reaction ko settle hone do.
-    </p>
+  <div class="lab" id="lab"></div>
 
-    <div class="lab" id="lab">
-      <div class="molecule"></div>
-      <div class="molecule"></div>
-      <div class="molecule"></div>
-      <div class="molecule"></div>
-    </div>
+  <div class="score">Chemistry destroyed: <span id="score">0</span></div>
+  <div class="comment" id="comment">Go on. No mercy.</div>
 
-    <div class="formula" id="formula">
-      Stress + Time → Calm
-    </div>
+  <div class="footer">Exam gaya. Ab game chalu.</div>
+</div>
 
-    <button onclick="breakChem()">Break the reaction</button>
+<script>
+const lab = document.getElementById("lab");
+const scoreEl = document.getElementById("score");
+const commentEl = document.getElementById("comment");
 
-    <div class="footer" id="footer">
-      You survived chemistry. That’s enough for today.
-    </div>
-  </div>
+let score = 0;
 
-  <script>
-    const formulas = [
-      "Stress + Time → Calm",
-      "Exam − Pressure = Peace",
-      "Overthinking → Cancelled",
-      "Today’s productivity = Showing up"
-    ];
+const comments = [
+  "Bond toot gaya.",
+  "Reaction failed successfully.",
+  "Periodic table crying.",
+  "Chemistry: 0, You: 1",
+  "Brain thoda halka hua."
+];
 
-    const footers = [
-      "You survived chemistry. That’s enough for today.",
-      "Marks baad mein. Abhi rest.",
-      "Brain ko thoda idle pe daal do.",
-      "Reaction over. Lab closed."
-    ];
+function spawnAtom() {
+  const atom = document.createElement("div");
+  atom.className = "atom";
+  atom.innerText = "⚛️";
 
-    let i = 0;
+  atom.style.left = Math.random() * (lab.clientWidth - 40) + "px";
 
-    function breakChem() {
-      i++;
+  atom.onclick = () => {
+    score++;
+    scoreEl.innerText = score;
+    commentEl.innerText = comments[score % comments.length];
+    atom.remove();
+  };
 
-      document.getElementById("formula").innerText =
-        formulas[i % formulas.length];
+  lab.appendChild(atom);
 
-      document.getElementById("footer").innerText =
-        footers[i % footers.length];
+  setTimeout(() => {
+    if (atom.parentNode) atom.remove();
+  }, 3000);
+}
 
-      const lab = document.getElementById("lab");
-      lab.style.background = "#eaf1f8";
-
-      setTimeout(() => {
-        lab.style.background = "#f2f6fa";
-      }, 300);
-    }
-  </script>
+setInterval(spawnAtom, 700);
+</script>
 </body>
 </html>
