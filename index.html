@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Chemistry Smash 🧪💥</title>
+<title>Chemistry Destroyer 🧪💥</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -14,21 +14,22 @@
 }
 
 body {
-  background: linear-gradient(180deg, #0f1220, #1a1e33);
   height: 100vh;
+  background: radial-gradient(circle at top, #1a1d3a, #0b0e1c);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  overflow: hidden;
 }
 
 .game {
-  width: 90%;
+  width: 92%;
   max-width: 420px;
-  background: #14172a;
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  background: rgba(20, 23, 55, 0.9);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
   text-align: center;
 }
 
@@ -38,70 +39,85 @@ h1 {
 }
 
 .sub {
-  font-size: 14px;
-  color: #cfcfcf;
-  margin-bottom: 14px;
+  font-size: 13.5px;
+  color: #bfc3ff;
+  margin-bottom: 12px;
 }
 
 .lab {
   position: relative;
-  width: 100%;
-  height: 280px;
-  background: radial-gradient(circle, #22274a, #14172a);
-  border-radius: 14px;
+  height: 300px;
+  background: radial-gradient(circle, #222661, #14173a);
+  border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 14px;
 }
 
 .atom {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: #ff4d4d;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
-  animation: move 3s linear forwards;
+  animation: float 5s linear forwards;
 }
 
-@keyframes move {
-  from { transform: translateY(300px); }
-  to { transform: translateY(-60px); }
+@keyframes float {
+  from { transform: translateY(360px) rotate(0deg); }
+  to { transform: translateY(-80px) rotate(360deg); }
+}
+
+.blast {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  animation: blast 0.6s forwards;
+}
+
+@keyframes blast {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
 .score {
+  margin-top: 10px;
   font-size: 14px;
-  margin-bottom: 8px;
 }
 
 .comment {
+  margin-top: 6px;
   font-size: 13px;
-  color: #aaa;
+  color: #ffd6d6;
   min-height: 18px;
 }
 
 .footer {
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 12px;
-  color: #777;
+  color: #9aa0ff;
 }
 </style>
 </head>
 
 <body>
 <div class="game">
-  <h1>Break the Chemistry 🧪</h1>
-  <div class="sub">Tap atoms. Ruin chemistry. Relax brain.</div>
+  <h1>Destroy Chemistry 🧪💣</h1>
+  <div class="sub">Tap atoms. Make chemistry cry. Chill.</div>
 
   <div class="lab" id="lab"></div>
 
-  <div class="score">Chemistry destroyed: <span id="score">0</span></div>
-  <div class="comment" id="comment">Go on. No mercy.</div>
+  <div class="score">Chemistry ruined: <b><span id="score">0</span></b></div>
+  <div class="comment" id="comment">No rules. No syllabus.</div>
 
-  <div class="footer">Exam gaya. Ab game chalu.</div>
+  <div class="footer">Exam khatam. Ab maza allowed.</div>
 </div>
 
 <script>
@@ -111,12 +127,13 @@ const commentEl = document.getElementById("comment");
 
 let score = 0;
 
-const comments = [
-  "Bond toot gaya.",
-  "Reaction failed successfully.",
-  "Periodic table crying.",
-  "Chemistry: 0, You: 1",
-  "Brain thoda halka hua."
+const lines = [
+  "Bond toot gaya 💥",
+  "Reaction failed successfully 😌",
+  "Periodic table sad 😭",
+  "Chemistry got cooked 🔥",
+  "Brain lighter now 🌿",
+  "Aesi taisi ho gayi 🧪"
 ];
 
 function spawnAtom() {
@@ -129,7 +146,17 @@ function spawnAtom() {
   atom.onclick = () => {
     score++;
     scoreEl.innerText = score;
-    commentEl.innerText = comments[score % comments.length];
+    commentEl.innerText = lines[score % lines.length];
+
+    for (let i = 0; i < 6; i++) {
+      const b = document.createElement("div");
+      b.className = "blast";
+      b.style.left = atom.offsetLeft + 12 + "px";
+      b.style.top = atom.offsetTop + 12 + "px";
+      lab.appendChild(b);
+      setTimeout(() => b.remove(), 600);
+    }
+
     atom.remove();
   };
 
@@ -137,10 +164,10 @@ function spawnAtom() {
 
   setTimeout(() => {
     if (atom.parentNode) atom.remove();
-  }, 3000);
+  }, 5000);
 }
 
-setInterval(spawnAtom, 700);
+setInterval(spawnAtom, 650);
 </script>
 </body>
 </html>
